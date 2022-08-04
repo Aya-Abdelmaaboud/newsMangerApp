@@ -1,0 +1,47 @@
+<form class="container mt-5 mb-5" #reporterForm="ngForm" (ngSubmit)="updateReporter(reporterForm.value)">
+  <div class="mb-3">
+    <label for="name" class="form-label">Name</label>
+    <input type="text" class="form-control" placeholder="Enter Name" id="name" name="name" ngModel disabled
+      [(ngModel)]="reporter.name">
+  </div>
+  <div class="mb-3">
+    <label for="age" class="form-label">Age</label>
+    <input type="number" class="form-control" id="age" placeholder="Enter Age" name="age" ngModel disabled
+      [(ngModel)]="reporter.age">
+  </div>
+  <div class="mb-3">
+    <label for="email" class="form-label">Email</label>
+    <input type="text" class="form-control" id="email" placeholder="Enter your email" name="email" ngModel disabled
+      [(ngModel)]="reporter.email">
+  </div>
+  <div class="mb-3">
+    <label for="password" class="form-label">Password</label>
+    <input type="password" class="form-control" id="password" placeholder="Enter Pasword" name="password" ngModel
+      #password="ngModel" required minlength="6" (focus)="invalidPassword=false" [(ngModel)]="reporter.password">
+    <div class="d-flex justify-content-start error" *ngIf="password.invalid&&password.touched">
+      <div *ngIf="password.errors?.['required']">* Password is required </div>
+      <div *ngIf="password.errors?.['minlength']">* Password minium length is
+        {{password.errors?.['minlength'].requiredLength}} and you hvae enterd
+        {{password.errors?.['minlength'].actualLength}} </div>
+    </div>
+    <div class="d-flex justify-content-start error" *ngIf="invalidPassword">
+      * {{passwordMsg}}
+    </div>
+  </div>
+  <div class="mb-3">
+    <label for="mobile" class="form-label">Mobile Number</label>
+    <input type="number" class="form-control" id="mobile" placeholder="Enter Mobile Number" name="phoneNumber" ngModel
+      #mobile="ngModel" required (focus)="invalidNumber=false" [(ngModel)]="reporter.phoneNumber">
+    <div class="error d-flex justify-content-start" *ngIf="mobile.touched&&mobile.invalid">
+      <div *ngIf="mobile.errors?.['required']">* Mobile Number is required</div>
+    </div>
+    <div class="d-flex justify-content-start error" *ngIf="invalidNumber">
+      * {{numberMsg}}
+    </div>
+  </div>
+  <div class="mb-3">
+    <label for="image" class="form-label">Image</label>
+    <input class="form-control" type="file" id="image" name="personalImg" ngModel (change)="handleUpload($event)">
+  </div>
+  <button type="submit" class="btn btn-primary" [disabled]="reporterForm.invalid">Update User</button>
+</form>

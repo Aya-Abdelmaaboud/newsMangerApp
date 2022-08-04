@@ -1,0 +1,25 @@
+<form class="container mt-5 mb-5" [formGroup]="loginForm" (ngSubmit)="login(loginForm.value)">
+
+  <div class="mb-3">
+    <label for="email" class="form-label">Email</label>
+    <input type="text" class="form-control" id="email" placeholder="Enter your email" formControlName="email" (focus)="invalidLogin=false">
+    <div class="d-flex justify-content-start error" *ngIf="myValues.email.invalid&&myValues.email.touched" >
+      <div *ngIf="myValues.email.errors?.['required']">* email is required </div>
+      <div *ngIf="myValues.email.errors?.['email']">* Please enter valid email </div>
+    </div>
+  </div>
+  <div class="mb-3">
+    <label for="password" class="form-label">Password</label>
+    <input type="password" class="form-control" id="password" placeholder="Enter Pasword" formControlName="password" (focus)="invalidLogin=false">
+    <div class="d-flex justify-content-start error" *ngIf="myValues.password.invalid&&myValues.password.touched">
+      <div *ngIf="myValues.password.errors?.['required']">* Passwordis required </div>
+      <div *ngIf="myValues.password.errors?.['minlength']">* Password minium length is
+        {{myValues.password.errors?.['minlength'].requiredLength}} and you hvae enterd
+        {{myValues.password.errors?.['minlength'].actualLength}} </div>
+    </div>
+  </div>
+  <div class="d-flex justify-content-start error mb-3" *ngIf="invalidLogin">
+    * Please check email or password
+  </div>
+  <button type="submit" class="btn btn-primary" [disabled]="loginForm.invalid">Login</button>
+</form>

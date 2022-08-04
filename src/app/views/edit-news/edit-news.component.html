@@ -1,0 +1,27 @@
+<form class="container mt-5 mb-5" #newsForm="ngForm" (ngSubmit)="editNews(newsForm.value)">
+  <div class="mb-3">
+    <label for="title" class="form-label">Title</label>
+    <input type="text" class="form-control" placeholder="Enter Title" id="title" name="title" ngModel #title="ngModel"
+      required [(ngModel)]="news.title">
+    <div class="error d-flex justify-content-start" *ngIf="title.touched&&title.invalid">
+      <div *ngIf="title.errors?.['required']">* Title is required</div>
+    </div>
+  </div>
+  <div class="mb-3">
+    <label for="desc" class="form-label">Description</label>
+    <input type="desc" class="form-control" id="desc" placeholder="Enter Description" name="desc" ngModel
+      #desc="ngModel" required minlength="10" [(ngModel)]="news.desc">
+    <div class="d-flex justify-content-start error" *ngIf="desc.invalid&&desc.touched">
+      <div *ngIf="desc.errors?.['required']">* Description is required </div>
+      <div *ngIf="desc.errors?.['minlength']">* Description minium length is
+        {{desc.errors?.['minlength'].requiredLength}} and you hvae enterd
+        {{desc.errors?.['minlength'].actualLength}} </div>
+    </div>
+  </div>
+  <div class="mb-3">
+    <label for="image" class="form-label">Image</label>
+    <input class="form-control" type="file" id="image" name="image" ngModel (change)="handleUpload($event)">
+  </div>
+  <button type="submit" class="btn btn-primary" [disabled]="newsForm.invalid">Edit News</button>
+</form>
+
